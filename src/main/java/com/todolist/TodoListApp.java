@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.File;
 import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -330,6 +331,8 @@ public class TodoListApp extends JFrame {
         }
         
         if (taskToEdit == null) return;
+
+        final Task taskToEditRef = taskToEdit;
         
         JDialog dialog = new JDialog(this, "Editar Tarea", true);
         dialog.setLayout(new BorderLayout());
@@ -400,11 +403,11 @@ public class TodoListApp extends JFrame {
             }
             
             Task updatedTask = new Task(newTitle, newDescription, newDueDate, newCategory);
-            if (taskToEdit.isCompleted()) {
+            if (taskToEditRef.isCompleted()) {
                 updatedTask.markAsCompleted();
             }
             
-            taskManager.updateTask(taskToEdit, updatedTask);
+            taskManager.updateTask(taskToEditRef, updatedTask);
             refreshTaskTable();
             dialog.dispose();
         });
